@@ -1,0 +1,71 @@
+spring:
+    application:
+        name: archmi-registry
+        
+---
+
+spring:
+    profiles:
+        active: production
+        
+    cloud:
+        config:
+            uri: http://127.0.0.1:9000/config
+server:
+    port: 9001
+    context-path: /registry
+    address: 0.0.0.0
+    
+eureka:
+    instance:
+        protocol: http
+        ip-address: 127.0.0.1
+        port: 9001
+        context-path: /registry
+        prefer-ip-address: true
+    client:
+        service-url:
+            defaultZone: ${eureka.instance.protocol}://${eureka.instance.ip-address}:${eureka.instance.port}${eureka.instance.context-path}/eureka/
+        register-with-eureka: false
+        fetch-registry: false
+
+logging:
+    level:
+        com:
+            netflix:
+                eureka: false
+                discovery: false
+                
+---
+
+spring:
+    profiles:
+        active: development
+        
+    cloud:
+        config:
+            uri: http://127.0.0.1:9000/config
+server:
+    port: 8001
+    context-path: /registry
+    address: 0.0.0.0
+    
+eureka:
+    instance:
+        protocol: http
+        ip-address: 127.0.0.1
+        port: 8001
+        context-path: /registry
+        prefer-ip-address: true
+    client:
+        service-url:
+            defaultZone: ${eureka.instance.protocol}://${eureka.instance.ip-address}:${eureka.instance.port}${eureka.instance.context-path}/eureka/
+        register-with-eureka: false
+        fetch-registry: false
+
+logging:
+    level:
+        com:
+            netflix:
+                eureka: false
+                discovery: false
